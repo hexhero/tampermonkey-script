@@ -26,11 +26,11 @@
 //            url:pathname
 //        },
         {
-            name:'🪲master → INT',
+            name:'🚀master → INT',
             url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=master&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=INT`
         },
         {
-            name:'🪲main → INT',
+            name:'🚀main → INT',
             url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=main&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=INT`
         },
         {
