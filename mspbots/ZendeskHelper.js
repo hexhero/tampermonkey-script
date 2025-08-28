@@ -36,7 +36,7 @@
         const box = document.createElement('div');
         box.id = 'floating-box';
         box.style.position = 'fixed';
-        box.style.bottom = '60px';
+        box.style.top = '150px';
         box.style.right = '20px';
         box.style.width = '200px';
         box.style.height = '100px';
@@ -46,10 +46,11 @@
         box.style.borderRadius = '8px';
         box.style.zIndex = '9999';
         box.style.cursor = 'move';
-        box.innerHTML = `<strong>${org.domain_names[0]} / MRR:${org.organization_fields.total_mrr} </strong><br/>${org.organization_fields.mspbots_tenant_code_org_field}
-<br/><a href='zdticket:ticket_analyze ${ticketId} Public_Reply azure '>Public Reply</a> / <a href='zdticket:ticket_analyze ${ticketId} Reply azure '>Reply</a>
-<br/><a href='zdticket:ticket_analyze ${ticketId} Common_Reply azure '>Internal Reply</a> / <a href='zdticket:ticket_analyze ${ticketId} RCA azure '>RCA</a>
-<br/><a href='zdticket:ticket_analyze ${ticketId} Analyze azure '>Analyze</a>
+        box.innerHTML = `<strong>${org?.domain_names?.[0]|| 'None'} / MRR:${org?.organization_fields?.total_mrr ?? 'None'} </strong>
+<br/>${org?.organization_fields?.mspbots_tenant_code_org_field ?? ""}
+
+<br/><a href='zdticket:ticket_analyze ${ticketId} Public_Reply azure '>Public</a> / <a href='zdticket:ticket_analyze ${ticketId} Reply azure '>Private</a> / <a href='zdticket:ticket_analyze ${ticketId} Common_Reply azure '>Internal</a>
+<br/><a href='zdticket:ticket_analyze ${ticketId} RCA azure '>RCA</a> / <a href='zdticket:ticket_analyze ${ticketId} Analyze azure '>Analyze</a>
 `;
 
         document.body.appendChild(box);
