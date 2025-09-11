@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ZendeskHelper
+// @name         ZendeskHellper
 // @namespace    http://tampermonkey.net/
 // @version      2025-08-14
 // @description  try to take over the world!
@@ -32,6 +32,9 @@
     })
     .then(data => {
         var org = data.organizations[0]
+        var mspbots_tenant_name = org?.domain_names?.[0]|| 'None'
+        var mspbots_tenant_code = org?.organization_fields?.mspbots_tenant_code_org_field ?? ""
+        var total_mrr = org?.organization_fields?.total_mrr ?? 'None'
         // 创建悬浮框元素
         const box = document.createElement('div');
         box.id = 'floating-box';
@@ -46,14 +49,35 @@
         box.style.borderRadius = '8px';
         box.style.zIndex = '9999';
         box.style.cursor = 'move';
-        box.innerHTML = `<strong>${org?.domain_names?.[0]|| 'None'} / MRR:${org?.organization_fields?.total_mrr ?? 'None'} </strong>
-<br/>${org?.organization_fields?.mspbots_tenant_code_org_field ?? ""}
-
+        box.innerHTML = `<div id='mspbots_tenant_name'><strong>${mspbots_tenant_name}</strong></div>
+<div id='mspbots_tenant_code'>${mspbots_tenant_code}</div>
+<div>MRR:${total_mrr}</div>
 <br/><a href='zdticket:ticket_analyze ${ticketId} Public_Reply azure '>Public</a> / <a href='zdticket:ticket_analyze ${ticketId} Reply azure '>Private</a> / <a href='zdticket:ticket_analyze ${ticketId} Common_Reply azure '>Internal</a>
 <br/><a href='zdticket:ticket_analyze ${ticketId} RCA azure '>RCA</a> / <a href='zdticket:ticket_analyze ${ticketId} Analyze azure '>Analyze</a>
 `;
 
         document.body.appendChild(box);
+
+        // 添加点击事件
+        document.getElementById('mspbots_tenant_name').addEventListener('click', function(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText(mspbots_tenant_name).then(function() {
+                console.log('复制成功');
+            }, function(err) {
+                console.error('复制失败: ', err);
+            });
+            
+        });
+
+        document.getElementById('mspbots_tenant_code').addEventListener('click', function(e) {
+            e.preventDefault();
+            // copy to clipboard
+            navigator.clipboard.writeText(mspbots_tenant_code).then(function() {
+                console.log('复制成功');
+            }, function(err) {
+                console.error('复制失败: ', err);
+            });
+        });
 
         // 添加拖动功能
         let isDragging = false;
