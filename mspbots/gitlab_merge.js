@@ -18,13 +18,8 @@
         pathname = pathname + '/-/merge_requests/new'
     }
 
-    var margeDiv = document.createElement('div');
     var projectId = document.getElementsByTagName("body")[0].getAttribute('data-project-id');
     var confs = [
-//        {
-//            name:'new',
-//            url:pathname
-//        },
         {
             name:'🚀master → INT',
             url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=master&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=INT`
@@ -33,35 +28,60 @@
             name:'🚀main → INT',
             url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=main&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=INT`
         },
-        {
-            name:'🚀hotfix → release',
-            url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=hotfix&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
-        },
-        {
-            name:'🚀master → release',
-            url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=master&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
-        },
-        {
-            name:'🚀main → release',
-            url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=main&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
-        },
-        {
-            name:'🚀INT → release',
-            url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=INT&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
-        }
+        // {
+        //     name:'🚀hotfix → release',
+        //     url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=hotfix&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
+        // },
+        // {
+        //     name:'🚀master → release',
+        //     url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=master&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
+        // },
+        // {
+        //     name:'🚀main → release',
+        //     url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=main&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
+        // },
+        // {
+        //     name:'🚀INT → release',
+        //     url:`${pathname}?merge_request[source_project_id]=${projectId}&merge_request[source_branch]=INT&merge_request[target_project_id]=${projectId}&merge_request[target_branch]=release`
+        // }
     ]
-    var dom = document.querySelector('li[data-track-label="merge_requests_menu"] .sidebar-sub-level-items')
-    dom.setAttribute('class','sidebar-sub-level-items')
-    for (var i in confs){
-        var conf = confs[i]
-        var _template =
-`
-<li data-track-label="audit_events" class=""><a aria-label="${conf.name}" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="${conf.name}" href="${conf.url}"><span>
-${conf.name}
-</span>
-</a></li>
-`
-        dom.appendChild(new DOMParser().parseFromString(_template,'text/html').documentElement.getElementsByTagName('li')[0])
 
-    }
+    var margeDiv = document.createElement('div');
+    // 创建浮动面板样式
+    margeDiv.style.position = 'fixed';
+    margeDiv.style.bottom = '80px';
+    margeDiv.style.left = '30px';
+    margeDiv.style.zIndex = '9999';
+    margeDiv.style.background = '#fff';
+    margeDiv.style.border = '1px solid #ccc';
+    margeDiv.style.borderRadius = '8px';
+    margeDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+    margeDiv.style.padding = '12px 16px';
+    margeDiv.style.minWidth = '180px';
+
+    // 标题
+    var title = document.createElement('div');
+    title.textContent = '快速合并';
+    title.style.fontWeight = 'bold';
+    title.style.marginBottom = '8px';
+    margeDiv.appendChild(title);
+
+    // 添加a标签
+    confs.forEach(function(conf) {
+        var a = document.createElement('a');
+        a.textContent = conf.name;
+        a.href = conf.url;
+        a.target = '_blank';
+        a.style.display = 'block';
+        a.style.margin = '6px 0';
+        a.style.color = '#007bff';
+        a.style.textDecoration = 'none';
+        a.onmouseover = function() { a.style.textDecoration = 'underline'; };
+        a.onmouseout = function() { a.style.textDecoration = 'none'; };
+        margeDiv.appendChild(a);
+    });
+
+    // 添加到页面
+    document.body.appendChild(margeDiv);
+
 })();
