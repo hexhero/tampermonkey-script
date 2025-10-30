@@ -53,7 +53,7 @@
 <div id='mspbots_tenant_code'>${mspbots_tenant_code}</div>
 <div>MRR:${total_mrr}</div>
 <br/><a href='zdticket:ticket_analyze ${ticketId} Public_Reply azure '>Public</a> / <a href='zdticket:ticket_analyze ${ticketId} Reply azure '>Private</a> / <a href='zdticket:ticket_analyze ${ticketId} Common_Reply azure '>Internal</a>
-<br/><a href='zdticket:ticket_analyze ${ticketId} RCA azure '>RCA</a> / <a href='zdticket:ticket_analyze ${ticketId} Analyze azure '>Analyze</a>
+<br/><a href='zdticket:ticket_analyze ${ticketId} RCA azure '>RCA</a> / <a href='zdticket:ticket_analyze ${ticketId} Analyze azure '>Analyze</a> / <a href='zdticket:ticket_analyze ${ticketId} Checklist azure '>Checklist</a>
 `;
 
         document.body.appendChild(box);
@@ -66,7 +66,7 @@
             }, function(err) {
                 console.error('复制失败: ', err);
             });
-            
+
         });
 
         document.getElementById('mspbots_tenant_code').addEventListener('click', function(e) {
@@ -106,5 +106,5 @@
 
 
 
-    
+
 })();
